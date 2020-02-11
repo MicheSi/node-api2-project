@@ -67,25 +67,29 @@ router.post('/', (req, res) => {
 router.post('/:id/comments', (req, res) => {
     const {id} = req.params;
     const comment = {...req.body, post_id: id}
-
     
     if (!comment.text) {
         res.status(400).json({ errorMessage: "Please provide text for the comment." })
-    } else {
-        Posts.insertComment(comment)
-        .then(post => {
-            if (!post) {
-                res.status(404).json({ message: "The post with the specified ID does not exist." })
-            } else {
-                res.status(200).json(post)
-            }
-            
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: "There was an error while saving the comment to the database" })
-        })
     }
+    Posts.findById(id)
+    .then(post => {
+        if (!post) {
+            res.status(404).json({ message: "The post with the specified ID does not exist." })
+        } else {
+            Posts.insertComment(comment)
+            .then(post => {
+                res.status(200).json(post) 
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({ error: "There was an error while saving the comment to the database" })
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ error: "There was an error while saving the comment to the database" })
+    })
 })
 
 router.delete('/:id', (req, res) => {
