@@ -4,7 +4,7 @@ const PostsCard = props => {
     return (
         <div className='postsCard'>
             <h2>{props.title}</h2>
-        <   p>{props.contents}</p>
+            <p>{props.contents}</p>
         </div>
     )
 }

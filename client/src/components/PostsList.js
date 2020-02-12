@@ -17,7 +17,7 @@ const PostsList = props => {
     }, [])
 
     return (
-        <div>
+        <div className='postsList'>
             {post.map(post => (
                 <PostsCard
                  key={post.id}
