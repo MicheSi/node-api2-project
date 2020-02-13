@@ -22,7 +22,7 @@ const PostsCard = props => {
         if (postToEdit) {
             setPost(postToEdit);
         }
-    }, [])
+    }, [props])
 
     const onChange = e => {
         setPost({
@@ -34,7 +34,7 @@ const PostsCard = props => {
     const editPost = e => {
         e.preventDefault()
         axios
-        .put(`http:localhost:5000/api/posts/${props.id}`, post)
+        .put(`http://localhost:5000/api/posts/${props.id}`, post)
         .then(res => {
             console.log('post updated', res)
             window.location.reload();
@@ -61,14 +61,14 @@ const PostsCard = props => {
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Edit Post</ModalHeader>
                 <ModalBody>
-                    <Form>
+                    <Form onSubmit={editPost}>
                         <FormGroup>
                             <Label for="title">Title</Label>
-                            <Input type="text" name="title" id="title" value={props.title} onChange={onChange} />
+                            <Input type="text" name="title" id="title" value={post.title} onChange={onChange} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="contents">Contents</Label>
-                            <Input type="textarea" name="contents" id="contents" value={props.contents} onChange={onChange} />
+                            <Input type="textarea" name="contents" id="contents" value={post.contents} onChange={onChange} />
                         </FormGroup>
                     </Form>
                 </ModalBody>
