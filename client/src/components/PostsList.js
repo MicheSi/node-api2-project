@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import PostsCard from './PostsCard';
+import {Button} from 'reactstrap';
 
 
 const PostsList = props => {
@@ -16,17 +17,25 @@ const PostsList = props => {
         .catch(err => console.log(err))
     }, [])
 
-    return (
-        <div className='postsList'>
-            {post.map(post => (
-                <PostsCard
-                 key={post.id}
-                 id={post.id}
-                 title={post.title}
-                 contents={post.contents}
-                />
-            ))}
+    const onClick = e => {
+        e.preventDefault()
+        window.location.href = '/add'
+      }
 
+    return (
+        <div className='postsContainer'>
+            <h1>API2 Stretch Project</h1>
+            <Button color='primary'className='addBtn' onClick={onClick}>Add Post</Button>
+            <div className='postsList'>
+                {post.map(post => (
+                    <PostsCard
+                     key={post.id}
+                     id={post.id}
+                     title={post.title}
+                     contents={post.contents}
+                    />
+                ))}
+            </div>
         </div>
     )
 }
